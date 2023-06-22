@@ -11,11 +11,11 @@ namespace csharp_core_api_crud.Controllers
     public class ClientsController : ControllerBase
     {
         [HttpPost]
-        public string Post()
+        public string Post([FromBody] ClientsModel clients)
         {
             DatabaseConn conn = new();
 
-            string query = "INSERT INTO clients (name, age) VALUES('Doom', '1980')";
+            string query = $"INSERT INTO clients (name, age) VALUES('{clients.Name}', '{clients.Age}')";
 
             //open connection
             if (conn.OpenConnection() == true)
@@ -28,9 +28,11 @@ namespace csharp_core_api_crud.Controllers
 
                 //close connection
                 conn.CloseConnection();
+
+                return "Created";
             }
 
-            return "Hello";
+            return "Bad";
         }
 
         [HttpGet]
@@ -69,6 +71,59 @@ namespace csharp_core_api_crud.Controllers
             else
             {
                 return list;
+            }
+        }
+
+        [HttpPut("{id}")]
+        public string Put(int id, ClientsModel client)
+        {
+            DatabaseConn conn = new();
+
+            string query = $"UPDATE clients SET name = '{client.Name}', age = '{client.Age}' WHERE id = '{id}' ";
+
+            //open connection
+            if (conn.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                conn.CloseConnection();
+
+                return "Updated";
+            }
+            else
+            {
+                return "Error";
+            }
+        }
+
+        [HttpDelete("{id}")] public string Delete(int id)
+        {
+            DatabaseConn conn = new();
+
+            string query = $"DELETE FROM clients WHERE id = '{id}' ";
+
+            //open connection
+            if (conn.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                conn.CloseConnection();
+
+                return "Deleted";
+            }
+            else
+            {
+                return "Error";
             }
         }
     }
