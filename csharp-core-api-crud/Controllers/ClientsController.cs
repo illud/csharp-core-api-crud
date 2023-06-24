@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using csharp_core_api_crud.DatabaseCon;
 using csharp_core_api_crud.Models;
+using Services;
 
 namespace csharp_core_api_crud.Controllers
 {
@@ -11,7 +11,7 @@ namespace csharp_core_api_crud.Controllers
     public class ClientsController : ControllerBase
     {
         [HttpPost]
-        public string Post([FromBody] ClientsModel clients)
+        public async Task<string> Post([FromBody] ClientsModel clients)
         {
             DatabaseConn conn = new();
 
@@ -21,10 +21,10 @@ namespace csharp_core_api_crud.Controllers
             if (conn.OpenConnection() == true)
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+                MySqlCommand cmd = new(query, conn.connection);
 
                 //Execute command
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
 
                 //close connection
                 conn.CloseConnection();
@@ -36,7 +36,7 @@ namespace csharp_core_api_crud.Controllers
         }
 
         [HttpGet]
-        public List<ClientsModel> Get()
+        public async Task<List<ClientsModel>> Get()
         {
             DatabaseConn conn = new();
 
@@ -49,9 +49,9 @@ namespace csharp_core_api_crud.Controllers
             if (conn.OpenConnection() == true)
             {
                 //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+                MySqlCommand cmd = new(query, conn.connection);
                 //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                MySqlDataReader dataReader = (MySqlDataReader)await cmd.ExecuteReaderAsync();
 
                 //Read the data and store them in the list
                 while (dataReader.Read())
@@ -75,7 +75,7 @@ namespace csharp_core_api_crud.Controllers
         }
 
         [HttpPut("{id}")]
-        public string Put(int id, ClientsModel client)
+        public async Task<string> Put(int id, ClientsModel client)
         {
             DatabaseConn conn = new();
 
@@ -85,10 +85,10 @@ namespace csharp_core_api_crud.Controllers
             if (conn.OpenConnection() == true)
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+                MySqlCommand cmd = new(query, conn.connection);
 
                 //Execute command
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
 
                 //close connection
                 conn.CloseConnection();
@@ -101,7 +101,8 @@ namespace csharp_core_api_crud.Controllers
             }
         }
 
-        [HttpDelete("{id}")] public string Delete(int id)
+        [HttpDelete("{id}")] 
+        public async Task<string>  Delete(int id)
         {
             DatabaseConn conn = new();
 
@@ -111,10 +112,10 @@ namespace csharp_core_api_crud.Controllers
             if (conn.OpenConnection() == true)
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, conn.connection);
+                MySqlCommand cmd = new(query, conn.connection);
 
                 //Execute command
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
 
                 //close connection
                 conn.CloseConnection();

@@ -2,7 +2,7 @@
 //Add MySql Library
 using MySql.Data.MySqlClient;
 
-namespace csharp_core_api_crud.DatabaseCon
+namespace Services
 {
     public class DatabaseConn
     {
