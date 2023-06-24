@@ -15,7 +15,9 @@ namespace csharp_core_api_crud.Controllers
         {
             DatabaseConn conn = new();
 
-            string query = $"INSERT INTO users (name, age, username, password) VALUES('{users.Name}', '{users.Age}', '{users.UserName}', '{users.Password}')";
+            BcryptService bcryptService = new();
+
+            string query = $"INSERT INTO users (name, age, username, password) VALUES('{users.Name}', '{users.Age}', '{users.UserName}', '{bcryptService.HashPassword(users.Password)}')";
             
             if(conn.OpenConnection() == true)
             {

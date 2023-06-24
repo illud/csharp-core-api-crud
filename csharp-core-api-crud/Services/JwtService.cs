@@ -1,7 +1,6 @@
 ﻿using JWT.Algorithms;
 using JWT.Builder;
 using System.Security.Cryptography;
-using System.Security.Policy;
 
 namespace Services
 {
@@ -22,7 +21,6 @@ namespace Services
 
         public bool ValidateJwt()
         {
-
             return true;
         }
     }
