@@ -75,6 +75,7 @@ namespace csharp_core_api_crud.Controllers
         public string Login()
         {
             JwtService token = new();
+
             return token.GenerateJwt("user");
         }
     }
