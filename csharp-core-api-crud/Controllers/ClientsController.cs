@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using csharp_core_api_crud.Models;
 using Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace csharp_core_api_crud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsController : ControllerBase
     {
         [HttpPost]
