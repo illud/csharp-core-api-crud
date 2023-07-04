@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using csharp_core_api_crud.Models;
 using Services;
 using Microsoft.AspNetCore.Authorization;
+using Models;
 
-namespace csharp_core_api_crud.Controllers
+namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -58,7 +58,7 @@ namespace csharp_core_api_crud.Controllers
                 //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    list.Add(new ClientsModel() { Id = (int)dataReader["id"], Name = (string)dataReader["name"], Age = (int)dataReader["age"] } );
+                    list.Add(new ClientsModel() { Id = (int)dataReader["id"], Name = (string)dataReader["name"], Age = (int)dataReader["age"] });
                 }
 
                 //close Data Reader
@@ -103,8 +103,8 @@ namespace csharp_core_api_crud.Controllers
             }
         }
 
-        [HttpDelete("{id}")] 
-        public async Task<string>  Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<string> Delete(int id)
         {
             DatabaseConn conn = new();
 

@@ -1,4 +1,4 @@
-﻿namespace csharp_core_api_crud.Models
+﻿namespace Models
 {
     public class ClientsModel
     {
