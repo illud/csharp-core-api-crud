@@ -3,12 +3,13 @@ using MySql.Data.MySqlClient;
 using Services;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
+using Responses;
 
 namespace Repository
 {
     public class UsersRepository
     {
-        public async Task<string> Create(UsersModel users)
+        public async Task<UserLoginResponseObject> Create(UserDto users)
         {
             DatabaseConn conn = new();
 
@@ -24,9 +25,9 @@ namespace Repository
 
                 conn.CloseConnection();
 
-                return "Created";
+                return new UserLoginResponseObject { response = "Created" };
             }
-            return "Error";
+            return new UserLoginResponseObject { response = "Error" };
         }
 
         public async Task<List<UsersModel>> GetUsers()
@@ -67,7 +68,7 @@ namespace Repository
             }
         }
 
-        public async Task<ActionResult<string>> GetOneUser(UserLoginDto user)
+        public async Task<ActionResult<UserLoginResponseObject>> GetOneUser(UserLoginDto user)
         {
             DatabaseConn conn = new();
 
@@ -103,13 +104,13 @@ namespace Repository
                 {
                     JwtService token = new();
 
-                    return token.GenerateJwt("user");
+                    return new UserLoginResponseObject { response = token.GenerateJwt("user") };
                 }
-                return "Error";
+                return new UserLoginResponseObject { response = "Error" };
             }
             else
             {
-                return "Error";
+                return new UserLoginResponseObject { response = "Error" };
             }
         }
     }

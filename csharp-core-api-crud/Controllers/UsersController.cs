@@ -3,6 +3,7 @@ using Services;
 using Microsoft.AspNetCore.Authorization;
 using Dto;
 using Models;
+using Responses;
 
 namespace Controllers
 {
@@ -13,7 +14,7 @@ namespace Controllers
     {
 
         [HttpPost(Name = "PostUser")]
-        public async Task<string> Post(UsersModel users)
+        public async Task<UserLoginResponseObject> Post(UserDto users)
         {
             UsersService usersService = new();
             return await usersService.UsersCreate(users);
@@ -27,7 +28,7 @@ namespace Controllers
         }
 
         [HttpPost("login"), AllowAnonymous]
-        public async Task<ActionResult<string>> Login(UserLoginDto user)
+        public async Task<ActionResult<UserLoginResponseObject>> Login(UserLoginDto user)
         {
             UsersService usersService = new();
             return await usersService.GetOne(user);

@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Repository;
+using Responses;
 
 namespace Services
 {
     public class UsersService
     {
-        public async Task<string> UsersCreate(UsersModel users)
+        public async Task<UserLoginResponseObject> UsersCreate(UserDto users)
         {
             UsersRepository usersRepository = new();
 
@@ -21,7 +22,7 @@ namespace Services
             return await usersRepository.GetUsers();
         }
 
-        public async Task<ActionResult<string>> GetOne(UserLoginDto user)
+        public async Task<ActionResult<UserLoginResponseObject>> GetOne(UserLoginDto user)
         {
             UsersRepository userRepository = new();
 
