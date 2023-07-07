@@ -2,7 +2,7 @@
 //Add MySql Library
 using MySql.Data.MySqlClient;
 
-namespace Services
+namespace Managers
 {
     public class DatabaseConn
     {

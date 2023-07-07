@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using Services;
 using Microsoft.AspNetCore.Authorization;
 using Models;
+using Managers;
 
 namespace Controllers
 {

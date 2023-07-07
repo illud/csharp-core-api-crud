@@ -1,6 +1,6 @@
 ﻿using BC = BCrypt.Net.BCrypt;
 
-namespace Services
+namespace Managers
 {
     public class BcryptService
     {

@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Services
+namespace Managers
 {
     public class JwtService
     {
@@ -12,18 +12,20 @@ namespace Services
         {
         }
 
-        public JwtService(IConfiguration configuration) {
+        public JwtService(IConfiguration configuration)
+        {
             _configuration = configuration;
         }
 
-        public string GenerateJwt(string user) {
+        public string GenerateJwt(string user)
+        {
 
             List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.Name, user)
             };
 
-           // var tokenKey = _configuration.GetSection("Jwt:Key").Value;
+            // var tokenKey = _configuration.GetSection("Jwt:Key").Value;
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("VpEWuEAohDTOkD6y2z6xc69WQr39pAdAVpEWuEAohDTOkD6y2z6xc69WQr39pAdA"));
 
@@ -37,11 +39,6 @@ namespace Services
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
-        }
-
-        public bool ValidateJwt()
-        {
-            return true;
         }
     }
 }
