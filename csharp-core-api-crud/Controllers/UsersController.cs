@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services;
 using Microsoft.AspNetCore.Authorization;
 using Dto;
 using Models;
 using Responses;
-using Data;
+using Repository;
 
 namespace Controllers
 {
@@ -13,31 +12,27 @@ namespace Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly DataContextDb _db;
-        public UsersController(DataContextDb contextDb)
-        {
-            _db = contextDb;
+        private readonly IUserRepository _userRepository;
+        public UsersController(IUserRepository userRepository) {
+            _userRepository = userRepository;
         }
 
         [HttpPost(Name = "PostUser"), AllowAnonymous]
         public async Task<UserLoginResponseObject> Post(UserDto users)
         {
-            UsersService usersService = new();
-            return await usersService.UsersCreate(users, _db);
+            return await _userRepository.Create(users);
         }
 
         [HttpGet(Name = "GetUsers")]
         public async Task<List<UsersModel>> Get()
         {
-            UsersService usersService = new();
-            return await usersService.Get(_db);
+            return await _userRepository.GetUsers();
         }
 
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserLoginResponseObject>> Login(UserLoginDto user)
         {
-            UsersService usersService = new();
-            return await usersService.GetOne(user, _db);
+            return await _userRepository.GetOneUser(user);
         }
     }
 }

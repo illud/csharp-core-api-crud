@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<DataContextDb>(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddTransient<IUserRepository, UsersRepository>();
 
 // Swagger token authorization bearer
 builder.Services.AddSwaggerGen(options => {

@@ -1,5 +1,4 @@
 ﻿using Models;
-using MySql.Data.MySqlClient;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
 using Responses;
@@ -9,10 +8,15 @@ using Managers;
 
 namespace Repository
 {
-    public class UsersRepository
+    public class UsersRepository : IUserRepository
     {
+        private readonly DataContextDb _db;
+        public UsersRepository(DataContextDb contextDb)
+        {
+            _db = contextDb;
+        }
 
-        public async Task<UserLoginResponseObject> Create(UserDto users, DataContextDb _db)
+        public async Task<UserLoginResponseObject> Create(UserDto users)
         {
             BcryptService bcryptService = new();
 
@@ -28,12 +32,12 @@ namespace Repository
             return new UserLoginResponseObject { response = "Created" };
         }
 
-        public async Task<List<UsersModel>> GetUsers(DataContextDb _db)
+        public async Task<List<UsersModel>> GetUsers()
         {
             return await _db.Users.ToListAsync();
         }
 
-        public async Task<ActionResult<UserLoginResponseObject>> GetOneUser(UserLoginDto user, DataContextDb _db)
+        public async Task<ActionResult<UserLoginResponseObject>> GetOneUser(UserLoginDto user)
         {
             List<UsersModel> userList = await _db.Users.Where(u => u.UserName == user.userName).ToListAsync();
 
