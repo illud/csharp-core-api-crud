@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Models
 {
     public class UsersModel
     {
@@ -9,5 +11,6 @@
         public string UserName { get; set; } = string.Empty;
 
         public string Password { get; set; } = string.Empty;
+
     }
 }

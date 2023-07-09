@@ -10,6 +10,6 @@ namespace Repository
     {
         Task<UserLoginResponseObject> Create(UserDto users);
         Task<List<UsersModel>> GetUsers();
-        Task<ActionResult<UserLoginResponseObject>> GetOneUser(UserLoginDto user);
+        Task<UsersModel> GetOneUser(UserLoginDto user);
     }
 }

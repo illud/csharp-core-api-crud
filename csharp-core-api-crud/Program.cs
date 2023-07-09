@@ -21,7 +21,9 @@ builder.Services.AddDbContext<DataContextDb>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+// Dependency Injection 
 builder.Services.AddTransient<IUserRepository, UsersRepository>();
+builder.Services.AddScoped<UserService>();
 
 // Swagger token authorization bearer
 builder.Services.AddSwaggerGen(options => {

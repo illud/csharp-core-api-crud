@@ -1,6 +1,5 @@
 ﻿using Models;
 using Dto;
-using Microsoft.AspNetCore.Mvc;
 using Responses;
 using Data;
 using Microsoft.EntityFrameworkCore;
@@ -37,20 +36,10 @@ namespace Repository
             return await _db.Users.ToListAsync();
         }
 
-        public async Task<ActionResult<UserLoginResponseObject>> GetOneUser(UserLoginDto user)
+        public async Task<UsersModel> GetOneUser(UserLoginDto user)
         {
             List<UsersModel> userList = await _db.Users.Where(u => u.UserName == user.userName).ToListAsync();
-
-            //return token if password math
-            BcryptService veryfyHash = new();
-
-            if (veryfyHash.VerifyPassword(user.password, userList[0].Password))
-            {
-                JwtService token = new();
-
-                return new UserLoginResponseObject { response = token.GenerateJwt("user") };
-            }
-            return new UserLoginResponseObject { response = "Error" };
+            return userList[0];
         }
     }
 }
