@@ -3,13 +3,14 @@ using Managers;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Responses;
+using Repository;
 
-namespace Repository
+namespace Bll
 {
-    public class UserService
+    public class UsersBll
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        public UsersBll(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Repository;
+using Bll;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Dependency Injection 
 builder.Services.AddTransient<IUserRepository, UsersRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UsersBll>();
 
 // Swagger token authorization bearer
 builder.Services.AddSwaggerGen(options => {

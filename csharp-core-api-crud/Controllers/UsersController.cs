@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Dto;
 using Models;
 using Responses;
-using Repository;
+using Bll;
 
 namespace Controllers
 {
@@ -12,28 +12,28 @@ namespace Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
-        public UsersController(UserService userService)
+        private readonly UsersBll _userBll;
+        public UsersController(UsersBll userBll)
         {
-            _userService = userService;
+            _userBll = userBll;
         }
 
         [HttpPost(Name = "PostUser"), AllowAnonymous]
         public async Task<UserLoginResponseObject> Post(UserDto users)
         {
-            return await _userService.Post(users);
+            return await _userBll.Post(users);
         }
 
         [HttpGet(Name = "GetUsers")]
         public async Task<List<UsersModel>> Get()
         {
-            return await _userService.GetUsers();
+            return await _userBll.GetUsers();
         }
 
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserLoginResponseObject>> Login(UserLoginDto user)
         {
-            return await _userService.Login(user);
+            return await _userBll.Login(user);
         }
     }
 }
